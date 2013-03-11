@@ -4,17 +4,17 @@ void setup() {
 
 void draw() {
     // It says to only use black and white so I guess
-    // the grey background has to go.
+    // the grey background has to go. Maybe you're supposed
+    // to use the rect() for this buuut this isn't really a
+    // “drawing” command...
     background(255);
 
-    // ...but since I didn't use the rect() to do that
-    // I can draw a ground with it.
     fill(0);
-    rect(0, 500, 800, 300);
+    ellipse(400, 650, 3200, 325);
 
     // Sad cone. :(
     fill(255);
-    ellipse(400, 520, 250, 120);
+    rect(280, 475, 240, 120, 80, 80, 20, 20);
     triangle(300, 490, 350, 100, 480, 475);
 
     if (keyPressed && key == 's') {

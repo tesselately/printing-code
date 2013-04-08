@@ -1,6 +1,12 @@
+import java.util.Random;
+
 float TAU = TWO_PI;
 float HALF_TAU = PI;
 float QUARTER_TAU = HALF_PI;
+
+boolean saving = false;
+long seed;
+Random r;
 
 void setup() {
     size(600, 600);
@@ -8,13 +14,22 @@ void setup() {
     noLoop();
 }
 
+float randomGauss(float mode, float stddev) {
+    float hue = (float)r.nextGaussian();
+    hue *= stddev;
+    hue += mode;
+    return hue;
+}
+
 void drawSelf() {
     colorMode(HSB, TAU, 100, 100, 100);
 
-    color foo = color(0, 0, 0);
-    color baz = color(0, 0, 50);
-    color moo = color(0, 0, 75, 75);
-    color quux = color(0, 0, 100);
+    float fooHue = random(TAU);
+
+    color foo = color(fooHue, randomGauss(75, 25), randomGauss(50, 50));
+    color baz = color(randomGauss((fooHue + QUARTER_TAU) % TAU, HALF_TAU), randomGauss(75, 25), randomGauss(75, 25));
+    color moo = color(randomGauss((fooHue + HALF_TAU) % TAU, HALF_TAU), randomGauss(75, 25), randomGauss(75, 25), 75);
+    color quux = color(randomGauss((fooHue - QUARTER_TAU) % TAU, HALF_TAU), randomGauss(10, 10), 100);
 
     background(quux);
 
@@ -70,14 +85,12 @@ void drawHalfPlaid() {
     popMatrix();
 }
 
-boolean saving = false;
-int seed;
-
 void draw() {
     if (!saving) {
         seed = millis();
     }
     randomSeed(seed);
+    r = new Random(seed);
 
     translate(300, 300);
     drawSelf();
